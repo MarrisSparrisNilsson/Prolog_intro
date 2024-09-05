@@ -43,19 +43,20 @@ susan plays tennis and basketball and volleyball.
 
 %% Enlargement of Figures
 % enlarge(Fig, Factor, Fig1).
-enlarge(square(A), F, square(A1)) :- 
+enlarge(square(A), F, square(A1)) :-
     A1 is F*A.
- enlarge(circle(R), F, circle(R1)) :-
+enlarge(circle(R), F, circle(R1)) :-
     R1 is F*R.
- enlarge(rectangle(A ,B), F, rectangle(A1, B1)) :-
+enlarge(rectangle(A ,B), F, rectangle(A1, B1)) :-
     A1 is F*A, B1 is F*B.
- % Enlargement with the univ operator 
- enlarge2(Fig, F, Fig1) :-  
+% Enlargement with the univ operator 
+enlarge2(Fig, F, Fig1) :-  
     Fig =.. [Type|Parameters],  
     multiplylist(Parameters, F, Parameters1),  
     Fig1 =.. [Type|Parameters1].
- multiplylist([], _, []).
- multiplylist([X|L], F, [X1|L1]) :-
+
+multiplylist([], _, []).
+multiplylist([X|L], F, [X1|L1]) :-
     X1 is F*X,   multiplylist(L, F, L1).
  
 %% Collecting all Solutions
