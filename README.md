@@ -11,6 +11,7 @@ For the Artificial Intelligence course we are diving into prolog programming
 
 3. Install the prolog VS Code extension: `arthurwang.vsc-prolog`
 4. Check the `prolog.executablePath` and make sure it's pointing to the swipl executable. On Windows the file path should be specified with `/` only.
+5. Configure `prolog.load.document` on save when pressing `Ctrl+S` to complie the active `.pl` file. Set the when-expression to `resourceExtname == ".pl"`
 
 ## Getting started
 
