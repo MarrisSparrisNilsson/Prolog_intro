@@ -18,3 +18,11 @@ For the Artificial Intelligence course we are diving into prolog programming
 1. Initiate Prolog with `swipl`
 2. All predicates (`?-`) should end with `.`, you can add them on the next line if you forget to add it.
 3. End the prolog CLI with `?- halt.`
+
+## Debugging
+
+When the terminal outputs the warning:
+
+`Warning: Singleton variables: [First]`
+
+It usually warns you that the variable `'First'` is unused. Replacing it with `_` should remove this warning.
