@@ -249,7 +249,7 @@ make_table_in_file(File) :-
 make_table_in_file(_).
 
 write_table :-
-    open('table.txt', write, File),
+    open('ex2/table.txt', write, File),
     make_table_in_file(File),
     close(File).
 
@@ -263,6 +263,6 @@ read_entries2(File) :-
         read_entries2(File)
     ).
 read_table2 :-
-    open('table.txt', read, File),
+    open('ex2/table.txt', read, File),
     read_entries2(File),
     close(File).
