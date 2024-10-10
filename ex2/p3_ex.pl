@@ -80,7 +80,7 @@ on(c,table).
 
 % ================================= Exercise answers ==============================
 
-% ========== PART A ========== 
+% ========== PART A: Lists ========== 
 
 % 2.
 % a) With conc
@@ -148,7 +148,7 @@ reverse([First|Rest], Reversed) :-
     conc(ReversedRest, [First], Reversed).
     
 
-% ========== PART B ========== 
+% ========== PART B: Operators ========== 
 
 % 8.
 
@@ -159,7 +159,10 @@ diana was the secretary of the department.
 
 % 9.
 
-% :-op(100, xfx, delelting).
+% :- op(_, xfx, in).
+% :- op(_, fx, concatenating).
+% :- op(_, xfx, and).
+
 
 :-op(500, xfx, in).
 :-op(500, xfx, gives).
@@ -186,6 +189,80 @@ deleting Item from [First | Rest] gives [First | NewRest] :-
     deleting Item from Rest gives NewRest.
 
 
-% ========== PART C ========== 
+% ========== PART C: Arithmetic Operators ========== 
 
 % 10.
+max(X, Y, X) :-
+    X >= Y.
+max(X, Y, Y) :-
+    X < Y.
+
+% 11.
+orderedAsc([_]).
+orderedAsc([Head, Head2|Tail]) :-
+    Head =< Head2,
+    orderedAsc([Head2|Tail]).
+
+% ========== PART D: Database Manipulation ========== 
+
+% 12.
+
+:- dynamic product/3.
+
+% a)
+make_table :-
+    L = [0,1,2,3,4,5,6,7,8,9],
+    member(X,L), % Choose first factor X
+    member(Y,L), % Choose second factor Y
+    Z is X * Y,
+    assert(product(X,Y,Z)), % Add one instance of a product.
+    fail. % initiate backtracking to find all solutions.
+    
+% b)
+maketable2 :-
+    L = [0,1,2,3,4,5,6,7,8,9],
+    findall(
+        _Template, % we do not need to collect solutions as they are asserted
+        ( % The second argument of findall is a compound goal.
+            member(X,L), % Choose first factor X
+            member(Y,L), % Choose second factor Y
+            Z is X * Y,
+            assert(product(X,Y,Z))
+        ),
+        _Bag % we do not need to collect solutions as they are asserted
+    ).
+
+
+% 13. (Optional) Writing and reading terms from a file. In a real world application 
+% you read terms or facts from a knowledge base and can with the help of prolog allow 
+% for reasoning and make inferences to deduce new facts and conclusions to extent the 
+% knowledge base and eventually become self taught. Aka "Artificial Intelligence".
+        % a)
+make_table_in_file(File) :-
+    member(X, [0,1,2,3,4,5,6,7,8,9]),
+    member(Y, [0,1,2,3,4,5,6,7,8,9]),
+    Z is X*Y,
+    write(File, 'product('),
+    write(File, X), write(File, ', '), write(File, Y),
+    write(File, ', '), write(File, Z), writeln(File, ').'),
+    fail.
+make_table_in_file(_).
+
+write_table :-
+    open('table.txt', write, File),
+    make_table_in_file(File),
+    close(File).
+
+% b)
+read_entries2(File) :-
+    read(File,Entry),
+    (
+        Entry=end_of_file
+        ;
+        assert(Entry),
+        read_entries2(File)
+    ).
+read_table2 :-
+    open('table.txt', read, File),
+    read_entries2(File),
+    close(File).
