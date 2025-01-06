@@ -2,6 +2,12 @@
 
 ## Constraint Logic Programming (CLP)
 
+If you want extra information about the clpfd library type the following in the command prompt:
+
+```pl
+?- help(clpfd).
+```
+
 ## Operators
 
 ### '='

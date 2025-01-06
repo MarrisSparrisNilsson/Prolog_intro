@@ -76,6 +76,8 @@ split2([X|L], L1, [X|L2]) :-
 % ############### Controlling backtracking ########################
 % ################### Negation ########################
 % --------------- FIND_REMAINING FUNCTIONS ------------------------
+candidates([person_A,person_B,person_C,person_D,person_F]).
+ruled_out([person_B,person_D]).
 
 find_remaining :- 
     candidates(Candidates),
@@ -99,7 +101,9 @@ find_remaining_3 :-
     ),
     writeln(List).
 
-:- consult(persons).
+
+% Get persons from separate file.
+% :- consult(persons).
 
 find_remaining_4 :- 
     candidates(Candidates),
@@ -156,3 +160,21 @@ height(t(Left, _, Right), H) :-
 
 % --------------- BINARY TREE FUNCTIONS ------------------------
 
+% ################### Data structures ########################
+% ################### Constraint Logic Programming (CLP) ########################
+
+:- use_module(library(clpfd)).
+
+% Call puzzle like this: puzzle(Solution).
+% Solution = ([5, 2, 6, 4, 8, 5]+[1, 9, 7, 4, 8, 5]=[7, 2, 3, 9, 7, 0]) .
+puzzle([D,O,N,A,L,D] + [G,E,R,A,L,D] = [R,O,B,E,R,T]) :-
+    Vars = [D,O,N,A,L,G,E,R,B,T],
+    Vars ins 0..9,
+    all_different(Vars),
+        D*100000 + O*10000 +N*1000 + A*100 + L*10 + D +
+        G*100000 + E*10000 +R*1000 + A*100 + L*10 + D #=
+    R*100000 + O*10000 + B*1000 + E*100 + R*10 + T,
+    D #\= 0, G #\= 0,
+    label(Vars). % USE THIS OVER LABELING
+    
+% ################### Constraint Logic Programming (CLP) ########################
